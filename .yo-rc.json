@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "io.jiffy.oa.starter",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "monolith",
+    "baseName": "starter",
+    "packageName": "io.jiffy.oa.starter",
+    "packageFolder": "io/jiffy/oa/starter",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ODhmZTcyMDI5ZWVlZDE1NGM5OTA1MmJhZDYxMmVjOWNiY2UyZjFkN2NlOWQ0OTI1ODNiMjZkMzI3N2IwNDhiZjc5NGYyMzFiNTI5MzMyN2VhODFhNDFkNWNhYzgxOGJjYTMyYmVkZDVkNTRjNDQ4N2U2OTcwYmUxZjY4YjQ1NGE=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1603239669885,
+    "testFrameworks": ["cucumber"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "zh-cn",
+    "languages": ["zh-cn", "en"],
+    "blueprints": []
+  }
+}
