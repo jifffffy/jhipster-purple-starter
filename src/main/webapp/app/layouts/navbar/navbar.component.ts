@@ -1,74 +1,74 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
-
-import { VERSION } from 'app/app.constants';
-import { LANGUAGES } from 'app/core/language/language.constants';
-import { AccountService } from 'app/core/auth/account.service';
-import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
-  selector: 'jhi-navbar',
+  selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['navbar.scss'],
+  styleUrls: ['./navbar.component.scss'],
+  providers: [NgbDropdownConfig],
 })
 export class NavbarComponent implements OnInit {
-  inProduction?: boolean;
-  isNavbarCollapsed = true;
-  languages = LANGUAGES;
-  swaggerEnabled?: boolean;
-  version: string;
+  public iconOnlyToggled = false;
+  public sidebarToggled = false;
 
   constructor(
+    config: NgbDropdownConfig,
     private loginService: LoginService,
-    private languageService: JhiLanguageService,
-    private sessionStorage: SessionStorageService,
     private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private profileService: ProfileService,
     private router: Router
   ) {
-    this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+    config.placement = 'bottom-right';
   }
 
-  ngOnInit(): void {
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.swaggerEnabled = profileInfo.swaggerEnabled;
-    });
-  }
+  ngOnInit() {}
 
-  changeLanguage(languageKey: string): void {
-    this.sessionStorage.store('locale', languageKey);
-    this.languageService.changeLanguage(languageKey);
-  }
-
-  collapseNavbar(): void {
-    this.isNavbarCollapsed = true;
+  logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
 
-  login(): void {
-    this.loginModalService.open();
-  }
-
-  logout(): void {
-    this.collapseNavbar();
-    this.loginService.logout();
-    this.router.navigate(['']);
-  }
-
-  toggleNavbar(): void {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
-
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
   }
+
+  getUserName(): string {
+    return this.isAuthenticated() ? this.accountService.getUserName() : '用户';
+  }
+
+  // toggle sidebar in small devices
+  toggleOffcanvas() {
+    document.querySelector('.sidebar-offcanvas')?.classList.toggle('active');
+  }
+
+  // toggle sidebar
+  toggleSidebar() {
+    const body = document.querySelector('body');
+    if (!body?.classList?.contains('sidebar-toggle-display') && !body?.classList?.contains('sidebar-absolute')) {
+      this.iconOnlyToggled = !this.iconOnlyToggled;
+      if (this.iconOnlyToggled) {
+        body?.classList.add('sidebar-icon-only');
+      } else {
+        body?.classList.remove('sidebar-icon-only');
+      }
+    } else {
+      this.sidebarToggled = !this.sidebarToggled;
+      if (this.sidebarToggled) {
+        body.classList.add('sidebar-hidden');
+      } else {
+        body.classList.remove('sidebar-hidden');
+      }
+    }
+  }
+
+  // toggle right sidebar
+  // toggleRightSidebar() {
+  //   document.querySelector('#right-sidebar').classList.toggle('open');
+  // }
 }

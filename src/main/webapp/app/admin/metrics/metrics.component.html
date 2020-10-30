@@ -1,65 +1,95 @@
-<div>
-    <h2>
-        <span id="metrics-page-heading" jhiTranslate="metrics.title">Application Metrics</span>
-
-        <button class="btn btn-primary float-right" (click)="refresh()">
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">
+          <span jhiTranslate="metrics.jvm.title">JVM Metrics</span>
+          <button class="btn btn-primary float-right" (click)="refresh()">
             <fa-icon icon="sync"></fa-icon> <span jhiTranslate="metrics.refresh.button">Refresh</span>
-        </button>
-    </h2>
-
-    <h3 jhiTranslate="metrics.jvm.title">JVM Metrics</h3>
-
-    <div class="row" *ngIf="metrics && !updatingMetrics">
-        <jhi-jvm-memory
-            class="col-md-4"
-            [updating]="updatingMetrics"
-            [jvmMemoryMetrics]="metrics.jvm">
-        </jhi-jvm-memory>
-
-        <jhi-jvm-threads
-            class="col-md-4"
-            [threadData]="threads">
-        </jhi-jvm-threads>
-
-        <jhi-metrics-system
-            class="col-md-4"
-            [updating]="updatingMetrics"
-            [systemMetrics]="metrics.processMetrics">
-        </jhi-metrics-system>
+          </button>
+        </h3>
+        <div *ngIf="metrics && !updatingMetrics">
+          <ngb-tabset type="pills" class="pills-success">
+            <ngb-tab title="Metrics">
+              <ng-template ngbTabContent>
+                <div class="media">
+                  <div class="media-body">
+                    <jhi-jvm-memory class="col-md-4" [updating]="updatingMetrics" [jvmMemoryMetrics]="metrics.jvm"> </jhi-jvm-memory>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Threads">
+              <ng-template ngbTabContent>
+                <div class="media">
+                  <div class="media-body">
+                    <jhi-jvm-threads class="col-md-4" [threadData]="threads"> </jhi-jvm-threads>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Process">
+              <ng-template ngbTabContent>
+                <div class="media">
+                  <div class="media-body">
+                    <jhi-metrics-system class="col-md-4" [updating]="updatingMetrics" [systemMetrics]="metrics.processMetrics">
+                    </jhi-metrics-system>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <div *ngIf="metrics && metricsKeyExists('garbageCollector')">
-        <h3 jhiTranslate="metrics.jvm.gc.title">Garbage collector statistics</h3>
-
-        <jhi-metrics-garbagecollector
-            [updating]="updatingMetrics"
-            [garbageCollectorMetrics]="metrics.garbageCollector">
+<div class="row" *ngIf="metrics && metricsKeyExists('garbageCollector')">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title" jhiTranslate="metrics.jvm.gc.title">Garbage collector statistics</h3>
+        <jhi-metrics-garbagecollector [updating]="updatingMetrics" [garbageCollectorMetrics]="metrics.garbageCollector">
         </jhi-metrics-garbagecollector>
+      </div>
     </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <jhi-metrics-request [updating]="updatingMetrics" [requestMetrics]="metrics['http.server.requests']"> </jhi-metrics-request>
+        </div>
+    </div>
+</div>
+</div>
 
-    <div class="well well-lg" *ngIf="updatingMetrics" jhiTranslate="metrics.updating">Updating...</div>
+<div class="row" *ngIf="metrics && metricsKeyExists('services')">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <jhi-metrics-endpoints-requests [updating]="updatingMetrics" [endpointsRequestsMetrics]="metrics.services">
+        </jhi-metrics-endpoints-requests>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <jhi-metrics-request
-        *ngIf="metrics && metricsKeyExists('http.server.requests')"
-        [updating]="updatingMetrics"
-        [requestMetrics]="metrics['http.server.requests']">
-    </jhi-metrics-request>
-
-    <jhi-metrics-endpoints-requests
-        *ngIf="metrics && metricsKeyExists('services')"
-        [updating]="updatingMetrics"
-        [endpointsRequestsMetrics]="metrics.services">
-    </jhi-metrics-endpoints-requests>
-
-    <jhi-metrics-cache
-        *ngIf="metrics && metricsKeyExists('cache')"
-        [updating]="updatingMetrics"
-        [cacheMetrics]="metrics.cache">
-    </jhi-metrics-cache>
-
-    <jhi-metrics-datasource
-        *ngIf="metrics && metricsKeyExistsAndObjectNotEmpty('databases')"
-        [updating]="updatingMetrics"
-        [datasourceMetrics]="metrics.databases">
-    </jhi-metrics-datasource>
+<div class="row" *ngIf="metrics && metricsKeyExists('cache')">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <jhi-metrics-cache [updating]="updatingMetrics" [cacheMetrics]="metrics.cache"> </jhi-metrics-cache>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="metrics && metricsKeyExistsAndObjectNotEmpty('databases')">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <jhi-metrics-datasource [updating]="updatingMetrics" [datasourceMetrics]="metrics.databases"> </jhi-metrics-datasource>
+      </div>
+    </div>
+  </div>
 </div>
