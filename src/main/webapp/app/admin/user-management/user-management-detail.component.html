@@ -5,7 +5,7 @@
         <h3 class="card-title">
           <span jhiTranslate="userManagement.detail.title">User</span>
           <jhi-boolean
-            [value]="user.activated ? true : false"
+            [value]="user?.activated ? true : false"
             [textTrue]="'userManagement.activated' | translate"
             [textFalse]="'userManagement.deactivated' | translate"
           >
@@ -14,24 +14,24 @@
         <form class="forms-sample">
           <div class="form-group">
             <label for="firstName"><span jhiTranslate="userManagement.firstName">First Name</span></label>
-            <input type="text" class="form-control" id="firstName" placeholder="{{ user.firstName }}" />
+            <input type="text" class="form-control" id="firstName" placeholder="{{ user?.firstName }}" />
           </div>
           <div class="form-group">
             <label for="lastName"><span jhiTranslate="userManagement.lastName">Last Name</span></label>
-            <input type="text" class="form-control" id="lastName" placeholder="{{ user.lastName }}" />
+            <input type="text" class="form-control" id="lastName" placeholder="{{ user?.lastName }}" />
           </div>
           <div class="form-group">
             <label for="email"><span jhiTranslate="userManagement.email">Email</span></label>
-            <input type="text" class="form-control" id="email" placeholder="{{ user.email }}" />
+            <input type="text" class="form-control" id="email" placeholder="{{ user?.email }}" />
           </div>
           <div class="form-group">
             <label for="createdBy"><span jhiTranslate="userManagement.createdBy">Created By</span></label>
-            <input type="text" class="form-control" id="createdBy" placeholder="{{ user.createdBy }}" />
+            <input type="text" class="form-control" id="createdBy" placeholder="{{ user?.createdBy }}" />
           </div>
           <div class="form-group">
             <label for="profiles"><span jhiTranslate="userManagement.profiles">Profiles</span></label>
             <ul class="list-unstyled">
-              <li *ngFor="let authority of user.authorities">
+              <li *ngFor="let authority of user?.authorities">
                 <span class="badge badge-info">{{ authority }}</span>
               </li>
             </ul>
