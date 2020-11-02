@@ -2,6 +2,8 @@
 
 This application was generated using JHipster 6.10.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.10.3](https://www.jhipster.tech/documentation-archive/v6.10.3).
 
+[![N|Solid](preview.jpg)](https://github.com/sunyuyangg555/jhipster-purple-starter).
+
 ## Development
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
